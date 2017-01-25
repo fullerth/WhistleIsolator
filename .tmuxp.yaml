@@ -2,8 +2,8 @@ session_name: whistle
 windows:
     - window_name: source
       panes:
-        - source WT_venv/bin/activate && vim -o TODO.md README.md
+        - source wi_venv/bin/activate && vim -o TODO.md README.md
     - window_name: test
       panes:
-        - source WT_venv/bin/activate
+        - source wi_venv/bin/activate
 
