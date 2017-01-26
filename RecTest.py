@@ -7,8 +7,8 @@ CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
-RECORD_SECONDS = 40
-WAVE_OUTPUT_FILENAME = "gameplay.wav"
+RECORD_SECONDS = 3    
+WAVE_OUTPUT_FILENAME = "whistle.wav"
 
 p = pyaudio.PyAudio()
 
