@@ -16,6 +16,22 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=5):
     y = lfilter(b, a, data)
     return y
 
+def find_jam_ending(data, threshold, time):
+    start_sample = 0
+    start_whistle = False
+    single_whistle_length = 25000
+    for i in range(0, data.shape[0]):
+        if((data[i] > threshold) & (i < (start_sample + single_whistle_length))):
+            if(start_whistle):
+                pass
+                #print("Continue Start: {}".format(start_sample))
+            else:
+                print("idx: {}, value: {}, time: {}".format(i, data[i], time[i]))
+                start_whistle = True
+                start_sample = i
+        else:
+            start_whistle = False
+
 if __name__ == "__main__":
     import numpy as np
     import matplotlib.pyplot as plt
@@ -45,8 +61,14 @@ if __name__ == "__main__":
 
     correlated_filtered = correlate(y, whistle_data) 
 
+    print("data: {}, filtered: {}, whistle: {}, correlated: {}, delay: {}".format(
+        data.shape, filtered_data.shape, whistle_data.shape, 
+        correlated_filtered.shape, correlated_filtered.shape[0] - data.shape[0]))
+
     Time = np.linspace(0, correlated_filtered.shape[0]/fs, 
         num = correlated_filtered.shape[0])
+
+    find_jam_ending(correlated_filtered, 1e11, Time)
 
     plt.plot(Time, correlated_filtered)
     plt.show()
